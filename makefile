@@ -9,11 +9,16 @@ BIN = XORCrypt
 _OBJ = main.o crypt.o
 OBJ = $(patsubst %,$(ODIR)/%,$(_OBJ))
 
-$(ODIR)/%.o: %.cpp $(DEPS)
+.SECONDEXPANSION:
+
+$(ODIR)/%.o: %.cpp $(DEPS) | $$(@D)
 	$(CC) -c -o $@ $< $(CXXFLAGS)
 
-XORCrypt: $(OBJ)
+XORCrypt: $(OBJ) | $$(@D)
 	$(CC) -o $@ $^ $(CXXFLAGS)
+
+$(ODIR):
+	mkdir -p $@
 
 .PHONY: clean
 
