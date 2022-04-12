@@ -1,5 +1,5 @@
 CC = g++
-CXXFLAGS = -I. -no-pie -Wall
+CXXFLAGS = -I. -no-pie -Werror -Wall -Wextra
 DEPS = crypt.h
 
 ODIR = obj
