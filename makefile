@@ -3,6 +3,7 @@ CXXFLAGS = -I. -no-pie -Werror -Wall -Wextra
 DEPS = crypt.h
 
 ODIR = obj
+BUILD_DIR = build
 
 BIN = XORCrypt
 
@@ -14,8 +15,11 @@ OBJ = $(patsubst %,$(ODIR)/%,$(_OBJ))
 $(ODIR)/%.o: %.cpp $(DEPS) | $$(@D)
 	$(CC) -c -o $@ $< $(CXXFLAGS)
 
-XORCrypt: $(OBJ) | $$(@D)
+$(BUILD_DIR)/$(BIN): $(OBJ) | $$(@D)
 	$(CC) -o $@ $^ $(CXXFLAGS)
+
+$(BUILD_DIR):
+	mkdir -p $@
 
 $(ODIR):
 	mkdir -p $@
@@ -23,4 +27,4 @@ $(ODIR):
 .PHONY: clean
 
 clean:
-	rm -f $(ODIR)/*.o $(BIN)
+	rm -f $(ODIR)/*.o $(BUILD_DIR)/$(BIN)
